@@ -1,10 +1,15 @@
 package com.e2etests.automation.page_objects;
 
+import java.time.Duration;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.e2etests.automation.utils.ConfigFileReader;
 import com.e2etests.automation.utils.Setup;
@@ -55,8 +60,8 @@ private ConfigFileReader configFileReader;
 	@FindBy(how = How.NAME,using = "submit")
 	public static WebElement Submitbtn;
 	
-	@FindBy(how = How.XPATH,using = "//b[contains(text(),' Dear Abir Be,')]")
-	public static WebElement msgConfirm;
+	@FindBy(how = How.XPATH, using = "//*[contains(text(),'Dear')]")
+	public WebElement msgConfirm;
 	
 	public InscriptionPage() {
 		PageFactory.initElements(Setup.getDriver(), this);
@@ -64,11 +69,10 @@ private ConfigFileReader configFileReader;
 	}
 	public void clickOnResgister() {
 		
-		linkResgister.click
-		();
+		linkResgister.click();
 			} 
 	public void goToUrl() {
-		Setup.getDriver().get(configFileReader.getProperties("home.url.Register"));
+		Setup.getDriver().get(configFileReader.getProperties("home.url"));
 	}
 	public void fillFirstName(String name) {
 		firstName.sendKeys(name);
@@ -96,9 +100,12 @@ private ConfigFileReader configFileReader;
 	public void fillpostalCode(String name) {
 		Code.sendKeys(name);
 	}
-	public void fillcountry(String name) {
-		Select select = new Select(countrySelect);
-		select.selectByVisibleText(name);
+	public void fillcountry(String country) {
+	    WebDriverWait wait = new WebDriverWait(Setup.getDriver(), Duration.ofSeconds(10));
+	    WebElement countryDropdown = wait.until(ExpectedConditions.elementToBeClickable(By.name("country")));
+	    Select selectCountry = new Select(countryDropdown);
+	    selectCountry.selectByVisibleText(country);
+
 	}
 	public void fillUserName(String name) {
 		userName.sendKeys(name);
