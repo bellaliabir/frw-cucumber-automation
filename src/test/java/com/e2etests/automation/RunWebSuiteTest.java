@@ -12,8 +12,8 @@ import org.junit.runner.RunWith;
 
 @CucumberOptions(
 		features = {"src/spec/features"},
-		plugin = {"pretty","html:target/cucumber-report.html"},
-		tags = ("@register"),
+		plugin = {"pretty","html:target/cucumber-report.html","json:target/cucumber-report.json"},
+		tags = ("@login"),
 		//glue = {"com.e2etests.automation.step_definitions"},
 		monochrome = true,
 		snippets = CAMELCASE
